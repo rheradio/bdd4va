@@ -107,7 +107,7 @@ Getting the product distribution (this may take a while)...
 ]
 ```
 
-For another example, see the [bdd4va test](https://github.com/rheradio/bdd4va/blob/main/test/test_bdd4va.py).
+For more examples, see the [bdd4va test](https://github.com/rheradio/bdd4va/blob/main/test/test_bdd4va.py).
 
 ## Detailed Function Documentation
 
