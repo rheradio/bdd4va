@@ -31,7 +31,7 @@ and R. Heradio, "Using Extended Logical Primitives for Efficient BDD Building," 
 ## Requirements and Installation
 
 + bdd4va has been tested on Linux and Windows with Python 3.8.10. For Windows, it requires installing the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install).
-+ bdd4va needs permissions for reading, writing and executing files (to achieve that, use the [chmod](https://en.wikipedia.org/wiki/Chmod) Linux command).
++ bdd4va needs permissions for reading, writing and executing files (to achieve that, use the Linux command [chmod](https://en.wikipedia.org/wiki/Chmod)).
 
 ## Usage Example
 
