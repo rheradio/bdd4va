@@ -12,7 +12,7 @@ A Python library for the analysis of highly configurable systems.
 
 bdd4va supports the analysis of variability models specified with the [SPLOT format](http://www.splot-research.org/). To do so, it first creates a [Binary Decision Diagram (BDD)](https://github.com/vscosta/cudd) that is later explored. In particular, bdd4va supports the following operations:
 
-+ **BDD Synthesis**: bdd4va wraps the [Logic2BDD tool](https://github.com/davidfa71/Extending-Logic) presented in [*D. Fernandez-Amoros, S. Bra, E. Aranda-Escolastico,
++ **BDD Synthesis**: bdd4va wraps the [Logic2BDD tool](https://github.com/davidfa71/Extending-Logic) to build BDDs, which was presented in [*D. Fernandez-Amoros, S. Bra, E. Aranda-Escolastico,
 and R. Heradio, "Using Extended Logical Primitives for Efficient BDD Building," Mathematics, vol. 8, no. 8, p. 1253, 2020.*](https://www.mdpi.com/2227-7390/8/8/1253)
 + **Configurations' Uniform Random Sampling**: bdd4va generates configuration samples with and without replacement wraps. To do so, it wraps [BDDSampler](https://github.com/davidfa71/BDDSampler), which is presented in *R. Heradio, D. Fernandez-Amoros, J. Galindo,
     D. Benavides, and D. Batory, "Uniform and Scalable Sampling of Highly Configurable Systems," Submitted to Empirical Software Engineering (currently under review), 2021.*
