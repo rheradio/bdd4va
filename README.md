@@ -70,7 +70,6 @@ The code execution would print the following text:
 Synthesizing the BDD (this may take a while)...
 
 Getting a sample with 10 configurations (this may take a while)...
-
 [   [   'Dell_XML',
         'not Vostro_1510',
         ...,
