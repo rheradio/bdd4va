@@ -6,10 +6,6 @@ A Python library for the analysis of highly configurable systems.
   * [Requirements and Installation](#requirements-and-installation)
   * [Usage Example](#usage-example)
   * [Detailed Function Documentation](#detailed-function-documentation)
-    + [bdd(model_file)](#bdd-model-file-)
-    + [sample(bdd_file, config_number, with_replacement=True)](#sample-bdd-file--config-number--with-replacement-true-)
-    + [feature_probabilities(bdd_file)](#feature-probabilities-bdd-file-)
-    + [product_distribution(bdd_file)](#product-distribution-bdd-file-)
   * [FaMaPy](#famapy)
 
 ## Description
@@ -20,7 +16,7 @@ bdd4va supports the analysis of variability models specified with the [SPLOT for
 and R. Heradio, "Using Extended Logical Primitives for Efficient BDD Building," Mathematics, vol. 8, no. 8, p. 1253, 2020.*](https://www.mdpi.com/2227-7390/8/8/1253)
 + **Configurations' Uniform Random Sampling**: bdd4va generates configuration samples with and without replacement wraps. To do so, it wraps [BDDSampler](https://github.com/davidfa71/BDDSampler), which is presented in *R. Heradio, D. Fernandez-Amoros, J. Galindo,
     D. Benavides, and D. Batory, "Uniform and Scalable Sampling of Highly Configurable Systems," Submitted to Empirical Software Engineering (currently under review), 2021.*
-+ **Computing Feature Probabilities**: bdd4va gets the probability each model feature has to be included in a valid product. That is, for every feature it returns the number of valid products with the feature activated divided by the total number of valid products (a product is valid if it satisfies all model constraints). For that, it wraps the tool [probability](https://github.com/rheradio/VMStatAnal), which was described in [*Heradio, R., Fernandez-Amoros, D., Mayr-Dorn, C., Egyed, A.: Supporting the statistical analysis of variability models. In: 41st International Conference on Software Engineering (ICSE), pp. 843–853. Montreal, Canada (2019).*](https://ieeexplore.ieee.org/document/8811977).
++ **Computing Feature Probabilities**: bdd4va gets the probability each model feature has to be included in a valid product. That is, for every feature it returns the number of valid products with the feature activated divided by the total number of valid products (a product is valid if it satisfies all model constraints). For that, it wraps the tool [probability](https://github.com/rheradio/VMStatAnal), which was described in [*Heradio, R., Fernandez-Amoros, D., Mayr-Dorn, C., Egyed, A.: Supporting the statistical analysis of variability models. 41st International Conference on Software Engineering (ICSE), pp. 843–853. Montreal, Canada (2019).*](https://ieeexplore.ieee.org/document/8811977).
 + **Computing Product Distribution**:  bdd4va gets the distribution of the number of activated features per product. That is,
         
         + How many products have 0 features activated?
@@ -39,18 +35,18 @@ and R. Heradio, "Using Extended Logical Primitives for Efficient BDD Building," 
 
 The following code:
 1) Imports bdd4va.
-2) Imports the library pprint for pretty printing the results.
+2) Imports the library pprint for pretty-printing the results.
 3) Creates a BDD for the [Dell laptop configurator variability model](https://github.com/rheradio/bdd4va/blob/main/test/model_examples/DellSPLOT/DellSPLOT.xml) included in the [test folder](https://github.com/rheradio/bdd4va/tree/main/test).
-4) Generates a sample with 10 configurations and prints the result.
-5) Compute the feature probabilities and prints the result.
-6) Compute the product distribution and prints the result.
+4) Generates a sample with 10 configurations and then prints the result.
+5) Computes the feature probabilities and then prints the result.
+6) Computes the product distribution and then prints the result.
 
 ```
 from bdd4va.bdd4va import sample, feature_probabilities, product_distribution, bdd
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
-# Synthesize a BDD for model DellSPLOT
+# Synthesize a BDD for the model DellSPLOT
 bdd("test/model_examples/DellSPLOT/DellSPLOT.xml")
 
 # Generate a sample with 10 configurations
@@ -64,6 +60,50 @@ pp.pprint(probabilities)
 # Compute the product distribution
 distribution = product_distribution("test/model_examples/DellSPLOT/DellSPLOT")
 pp.pprint(distribution)
+```
+
+The code execution would print the following text:
+
+```
+Synthesizing the BDD (this may take a while)...
+
+Getting a sample with 10 configurations (this may take a while)...
+
+[   [   'Dell_XML',
+        'not Vostro_1510',
+        ...,
+        'not integrated_Modem'
+    ],
+    ...
+]
+
+Getting the feature probabilities (this may take a while)...
+{   'Beetwen_5_and_7_lbs_Light': 0.869268,
+    'Between_1000_1300': 0.181764,
+    ...
+    'w80211n': 0.0803492
+}
+
+Getting the product distribution (this may take a while)...
+[   0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    22108,
+    103540,
+    223702,
+    ...
+]
 ```
 
 For another example, see the [bdd4va test](https://github.com/rheradio/bdd4va/blob/main/test/test_bdd4va.py).
@@ -89,7 +129,7 @@ For another example, see the [bdd4va test](https://github.com/rheradio/bdd4va/bl
 
 ### feature_probabilities(bdd_file)
     Computes the probability each model feature has to be included in a valid product.
-    That is, for every feature it returns the number of valid products with the feature activated
+    That is, for every feature, it returns the number of valid products with the feature activated
     divided by the total number of valid products (a product is valid if it satisfies all model constraints).
     :param bdd_file: dddmp file that stores a configuration model's BDD encoding.
     :return: A dictionary with the format {feature_1: feature_1_probability, feature_2: feature_2_probability, ...}
