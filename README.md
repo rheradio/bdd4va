@@ -2,6 +2,16 @@
 
 A Python library for the analysis of highly configurable systems. 
 
+  * [Description](#description)
+  * [Requirements and Installation](#requirements-and-installation)
+  * [Usage Example](#usage-example)
+  * [Detailed Function Documentation](#detailed-function-documentation)
+    + [bdd(model_file)](#bdd-model-file-)
+    + [sample(bdd_file, config_number, with_replacement=True)](#sample-bdd-file--config-number--with-replacement-true-)
+    + [feature_probabilities(bdd_file)](#feature-probabilities-bdd-file-)
+    + [product_distribution(bdd_file)](#product-distribution-bdd-file-)
+  * [FaMaPy](#famapy)
+
 ## Description
 
 bdd4va supports the analysis of variability models specified with the [SPLOT format](http://www.splot-research.org/). To do so, it first creates a [Binary Decision Diagram (BDD)](https://github.com/vscosta/cudd) that is later explored. In particular, bdd4va supports the following operations:
