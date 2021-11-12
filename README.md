@@ -2,6 +2,8 @@
 
 A Python library for the analysis of highly configurable systems. 
 
+## Contents
+
   * [Description](#description)
   * [Requirements and Installation](#requirements-and-installation)
   * [Usage Example](#usage-example)
