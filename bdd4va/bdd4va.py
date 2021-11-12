@@ -99,7 +99,7 @@ def sample(bdd_file, config_number, with_replacement=True):
     '''
     Generates a uniform random sample of size "config_number" from "bdd_file".
     For detailed information, see the paper: R. Heradio, D. Fernandez-Amoros, J. Galindo,
-    D. Benavides, and D. Batory, "Uniform and Scalable Sampling of Highly Congurable Systems,” Submitted
+    D. Benavides, and D. Batory, "Uniform and Scalable Sampling of Highly Configurable Systems,” Submitted
     to Empirical Software Engineering (currently under review), 2021.
     :param bdd_file: dddmp file that stores a configuration model's BDD encoding (dddmp is the
            format that the BDD library CUDD uses; check https://github.com/vscosta/cudd)
@@ -166,7 +166,7 @@ def feature_probabilities(bdd_file):
     probabilities = {}
     for line in line_iterator:
         parsed_line = re.compile("\s+").split(line.strip())
-        probabilities[parsed_line[0]] = parsed_line[1]
+        probabilities[parsed_line[0]] = float(parsed_line[1])
     return probabilities
 
 def product_distribution(bdd_file):
@@ -200,7 +200,7 @@ def product_distribution(bdd_file):
     distribution = []
     for line in line_iterator:
         parsed_line = re.compile("\s+").split(line.strip())
-        distribution.append(parsed_line[1])
+        distribution.append(int(parsed_line[1]))
     return distribution
 
 
