@@ -1,2 +1,1 @@
 include bdd4va/bin/*
-include bdd4va/model_examples/*
