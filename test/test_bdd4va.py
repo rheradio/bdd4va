@@ -6,7 +6,7 @@ from random import randint
 # Importing bdd4va from a relative path
 import sys
 sys.path.append("..")
-from bdd4va.bdd4va import sample, feature_probabilities, product_distribution, bdd
+from bdd4va import sample, feature_probabilities, product_distribution, bdd
 
 class TestBdd4va(unittest.TestCase):
 
