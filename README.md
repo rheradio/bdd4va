@@ -8,7 +8,7 @@ A Python library for the analysis of highly configurable systems.
   * [Requirements and Installation](#requirements-and-installation)
   * [Usage Example](#usage-example)
   * [Detailed Function Documentation](#detailed-function-documentation)
-  * [FaMaPy](#famapy)
+  * [Flama](#flama)
 
 ## Description
 
