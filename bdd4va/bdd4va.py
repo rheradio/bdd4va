@@ -62,7 +62,10 @@ class BDD:
     def __init__(self, model_file, synthesize_bdd=True):
         '''
         Builds a BDD for a configuration model
-        :param model_file: A file specifying a configuration model with the SPLOT format (visit http://www.splot-research.org/)
+        :param model_file: A file specifying a configuration model with the SPLOT format (visit http://www.splot-research.org/),
+               or the dddmp file of a previously synthesized BDD
+        :param synthesize_bdd: do you like to synthesize the BDD or to restore a previously synthesized one?
+        :return: A dddmp file containing the BDD encoding of the model is generated in the same folder where model_file is located.
         '''
 
         if (not synthesize_bdd):
@@ -112,8 +115,6 @@ class BDD:
         For detailed information, see the paper: R. Heradio, D. Fernandez-Amoros, J. Galindo,
         D. Benavides, and D. Batory, "Uniform and Scalable Sampling of Highly Configurable Systems,” Submitted
         to Empirical Software Engineering (currently under review), 2021.
-        :param bdd_file: dddmp file that stores a configuration model's BDD encoding (dddmp is the
-               format that the BDD library CUDD uses; check https://github.com/vscosta/cudd)
         :param config_number: Number of configurations to be generated.
         :param with_replacement: If it is True, every configuration is generated from scratch, independently
                of the prior generated configurations. Accordingly, a configuration may be repeated in the sample. If

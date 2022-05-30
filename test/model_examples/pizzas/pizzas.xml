@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<feature_model name="FeatureIDE model">
+    <feature_tree>
+:r Pizza(Pizza)
+	:m Topping(Topping)
+		:g [1,*]
+			: Salami(Salami)
+			: Ham(Ham)
+			: Mozzarella(Mozzarella)
+	:m Size(Size)
+		:g [1,1]
+			: Normal(Normal)
+			: Big(Big)
+	:m Dough(Dough)
+		:g [1,1]
+			: Neapolitan(Neapolitan)
+			: Sicilian(Sicilian)
+	:o CheesyCrust(CheesyCrust)
+</feature_tree>
+    <constraints>
+C1:~CheesyCrust  or  Big
+</constraints>
+</feature_model>

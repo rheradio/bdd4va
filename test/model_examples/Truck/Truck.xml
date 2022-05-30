@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<feature_model name="FeatureIDE model">
+    <feature_tree>
+:r Truck(Truck)
+	:m Weight(Weight)
+		:g [1,1]
+			: Lightweight(Lightweight)
+				:g [1,1]
+					: Tons12(Tons12)
+					: Tons18(Tons18)
+			: Heavyweight(Heavyweight)
+				:g [1,1]
+					: Tons23(Tons23)
+					: Tons40(Tons40)
+	:m Type(Type)
+		:g [1,1]
+			: Semitrailer(Semitrailer)
+			: Tank(Tank)
+			: Flatbed(Flatbed)
+				:m Dumper(Dumper)
+	:m Engine(Engine)
+		:g [1,1]
+			: KW160(KW160)
+			: KW280(KW280)
+			: KW400(KW400)
+	:m Cabin(Cabin)
+		:o HighRoof(HighRoof)
+		:o SleeperCabin(SleeperCabin)
+			:g [1,1]
+				: Bed1(Bed1)
+				: Beds2(Beds2)
+	:m Axles(Axles)
+		:m Count(Count)
+			:g [1,1]
+				: Axles2(Axles2)
+				: MultipleRearAxles(MultipleRearAxles)
+					:g [1,1]
+						: Axles3(Axles3)
+						: Axles4(Axles4)
+		:o AdditionalSteeringAxle(AdditionalSteeringAxle)
+		:m Drivetrain(Drivetrain)
+			:g [1,1]
+				: DrivenAxle1(DrivenAxle1)
+				: DrivenAxles2(DrivenAxles2)
+				: DrivenAxles3(DrivenAxles3)
+</feature_tree>
+    <constraints>
+C1:~Beds2  or  HighRoof
+C2:~DrivenAxles2  or  MultipleRearAxles
+C3:~DrivenAxles3  or  Axles4
+C4:~Tons40  or  KW400
+C5:~AdditionalSteeringAxle  or  Axles4
+C6:~HighRoof  or  Heavyweight
+C7:~Semitrailer  or  Tons18
+C8:~SleeperCabin  or  ~Flatbed
+C9:~SleeperCabin  or  ~Tank
+C10:~Tank  or  KW400
+</constraints>
+</feature_model>

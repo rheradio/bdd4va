@@ -1,0 +1,34 @@
+.ver DDDMP-3.0
+.mode A
+.varinfo 1
+.dd model_examples/pizzas/pizzas.dddmp
+.nnodes 18
+.nvars 12
+.nsuppvars 12
+.varnames Pizza Topping Salami Ham Mozzarella Size Normal Big Dough Neapolitan Sicilian CheesyCrust
+.suppvarnames Pizza Topping Salami Ham Mozzarella Size Normal Big Dough Neapolitan Sicilian CheesyCrust
+.orderedvarnames Pizza Topping Salami Ham Mozzarella Size Normal Big Dough Neapolitan Sicilian CheesyCrust
+.ids 0 1 2 3 4 5 6 7 8 9 10 11
+.permids 0 1 2 3 4 5 6 7 8 9 10 11
+.nroots 1
+.rootids -18
+.nodes
+1 T 1 0 0
+2 11 11 1 -1
+3 10 10 1 2
+4 10 10 2 1
+5 9 9 3 4
+6 8 8 5 1
+7 7 7 1 6
+8 10 10 1 -1
+9 9 9 8 -8
+10 8 8 9 1
+11 7 7 10 1
+12 6 6 7 11
+13 5 5 12 1
+14 4 4 13 1
+15 3 3 13 14
+16 2 2 13 15
+17 1 1 16 1
+18 0 0 17 1
+.end
