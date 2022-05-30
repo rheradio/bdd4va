@@ -1,7 +1,7 @@
 .ver DDDMP-3.0
 .mode A
 .varinfo 1
-.dd model_examples/DellSPLOT/DellSPLOT
+.dd model_examples/DellSPLOT/DellSPLOT.dddmp
 .nnodes 2625
 .nvars 118
 .nsuppvars 118
