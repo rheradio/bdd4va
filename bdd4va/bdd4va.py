@@ -4,8 +4,6 @@ import subprocess, locale
 import re
 from pathlib import Path
 
-
-
 def set_global_constants():
     '''
     Private auxiliary function that configures the following global constants:
@@ -29,21 +27,22 @@ set_global_constants()
 
 def run(binary, *args):
     '''
-    Private auxiliary function to run binary files in Linux and Windows.    
+    Private auxiliary function to run binary files in Linux and Windows.
     '''
-    bin_file = BDD4VAR_DIR + "/bin/" + binary
+    bin_dir = BDD4VAR_DIR + "/bin"
+    bin_file = bin_dir + "/" + binary
     if SYSTEM == 'Windows':
         if not args:
-            command = ['wsl', bin_file]
+            command = ['wsl', bin_file, bin_dir]
         else:
-            command = ['wsl', bin_file] + list(args)
+            command = ['wsl', bin_file, bin_dir] + list(args)
     else:
         if not args:
-            command = [bin_file]
+            command = [bin_file, bin_dir]
         else:
-            command = [bin_file] + list(args)
+            command = [bin_file, bin_dir] + list(args)
+    print(command)
     return subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-
 
 def check_file_existence(filename, extension=None):
     '''
@@ -78,7 +77,7 @@ class BDD:
 
         # Run binary splot2logic
         print("Preprocessing " + model_file + " to get its BDD...")
-        splot_process = run("splot2logic", "-use-XOR", model_file)
+        splot_process = run("splot2logic.sh", model_file)
         # Check that splot2logic was successful
         try:
             check_file_existence(file_name, "var")
@@ -90,13 +89,8 @@ class BDD:
 
         # Run binary logic2bdd's execution
         print("Synthesizing the BDD (this may take a while)...")
-        bdd_process = run("logic2bdd",
-                          "-line-length", "50",
-                          "-min-nodes", "100000",
-                          "-constraint-reorder", "minspan",
-                          "-base", file_name + ".dddmp",
-                          file_name + ".var",
-                          file_name + ".exp")
+        bdd_process = run("logic2bdd.sh", file_name)
+
         # Check that logic2bdd's execution was successful
         try:
             check_file_existence(file_name)
@@ -136,7 +130,7 @@ class BDD:
         if not with_replacement:
             parameters.append("-norep")
         print("Getting a sample with", config_number, "configurations (this may take a while)...")
-        sample_process = run("BDDSampler", "-names", str(config_number), bdd_file)
+        sample_process = run("BDDSampler.sh", str(config_number), bdd_file)
         result = sample_process.stdout.decode(locale.getdefaultlocale()[1])
         line_iterator = iter(result.splitlines())
         configurations = []
@@ -169,7 +163,7 @@ class BDD:
 
         # Run binary feature_probabilities
         print("Getting the feature probabilities (this may take a while)...")
-        feature_probabilities_process = run("feature_probabilities", bdd_file)
+        feature_probabilities_process = run("feature_probabilities.sh", bdd_file)
         result = feature_probabilities_process.stdout.decode(locale.getdefaultlocale()[1])
         line_iterator = iter(result.splitlines())
         probabilities = {}
@@ -200,8 +194,9 @@ class BDD:
 
         # Run binary product_distribution
         print("Getting the product distribution (this may take a while)...")
-        product_distribution_process = run("product_distribution", bdd_file)
+        product_distribution_process = run("product_distribution.sh", bdd_file)
         result = product_distribution_process.stdout.decode(locale.getdefaultlocale()[1])
+        print(result)
         line_iterator = iter(result.splitlines())
         distribution = []
         for line in line_iterator:
@@ -243,7 +238,8 @@ class BDD:
 
         # Run counter
         print("Counting the number of valid configurations (this may take a while)...")
-        count_process = run("counter", *expanded_assignment, bdd_file)
+        #count_process = run("counter", *expanded_assignment, bdd_file)
+        count_process = run("counter.sh", *expanded_assignment, bdd_file)
         result = count_process.stdout.decode(locale.getdefaultlocale()[1])
         return int(result)
 
