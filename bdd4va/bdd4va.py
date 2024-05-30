@@ -196,7 +196,6 @@ class BDD:
         print("Getting the product distribution (this may take a while)...")
         product_distribution_process = run("product_distribution.sh", bdd_file)
         result = product_distribution_process.stdout.decode(locale.getdefaultlocale()[1])
-        print(result)
         line_iterator = iter(result.splitlines())
         distribution = []
         for line in line_iterator:
