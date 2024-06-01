@@ -172,10 +172,15 @@ For more examples, see the [bdd4va test](https://github.com/rheradio/bdd4va/blob
     :return: A list with the generated configurations. Each element in that list is a configuration, and
              each configuration is in turn a list of strings encoding the feature values.
 
-### feature_probabilities(self):
+### feature_probabilities(self, feature_assignment=[]):
     Computes the probability each model feature has to be included in a valid product.
-    That is, for every feature, it returns the number of valid products with the feature activated
+    That is, for every feature it returns the number of valid products with the feature activated
     divided by the total number of valid products (a product is valid if it satisfies all model constraints).
+    For detailed information, see the paper: Heradio, R., Fernandez-Amoros, D., Mayr-Dorn, C., Egyed, A.:
+    Supporting the statistical analysis of variability models. In: 41st International Conference on Software
+    Engineering (ICSE), pp. 843–853. Montreal, Canada (2019).
+    :param feature_assignment: a list with a partial or a complete features' assignment
+           (e.g., ["f1", "not f3", "f5"])
     :return: A dictionary with the format {feature_1: feature_1_probability, feature_2: feature_2_probability, ...}
 
 ### product_distribution(self):
