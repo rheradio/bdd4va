@@ -41,8 +41,40 @@ def run(binary, *args):
             command = [bin_file, bin_dir]
         else:
             command = [bin_file, bin_dir] + list(args)
-    print(command)
     return subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+
+def expand_assignment(bdd_file, feature_assignment):
+    '''
+    Changes the format of a list of features' assignments.
+    e.g., ['MP3', 'not Basic'] => ['MP3=true', 'Basic=false']
+    First, it checks if the features in feature_assignment are valid features of bdd_file.
+    :param bdd_file: file containing the BDD encoding of the model
+    :param feature_assignment: the list of features' assignments
+    :return: reformatted feature assignment
+    '''
+
+    # Get all feature names
+    f = open(bdd_file, "r")
+    bdd_code = f.read()
+    varnames = re.search('varnames\\s+(.*)', bdd_code).group(1).split()
+    f.close()
+
+    expanded_assignment = []
+    for feature in feature_assignment:
+        ft = None
+        if re.match('not\\s+', feature):
+            ft = re.search('not\\s+(.*)', feature).group(1)
+            if varnames.count(ft) == 0:
+                raise Exception(ft + " is not a valid feature of " + bdd_file)
+            else:
+                ft += "=false"
+        else:
+            if varnames.count(feature) == 0:
+                raise Exception(feature + " is not a valid feature of " + bdd_file)
+            else:
+                ft = feature + "=true"
+        expanded_assignment.append(ft)
+        return expanded_assignment
 
 def check_file_existence(filename, extension=None):
     '''
@@ -148,7 +180,7 @@ class BDD:
             configurations.append(configuration)
         return configurations
 
-    def feature_probabilities(self):
+    def feature_probabilities(self, feature_assignment=[]):
         '''
         Computes the probability each model feature has to be included in a valid product.
         That is, for every feature it returns the number of valid products with the feature activated
@@ -156,6 +188,8 @@ class BDD:
         For detailed information, see the paper: Heradio, R., Fernandez-Amoros, D., Mayr-Dorn, C., Egyed, A.:
         Supporting the statistical analysis of variability models. In: 41st International Conference on Software
         Engineering (ICSE), pp. 843–853. Montreal, Canada (2019).
+        :param feature_assignment: a list with a partial or a complete features' assignment
+               (e.g., ["f1", "not f3", "f5"])
         :return: A dictionary with the format {feature_1: feature_1_probability, feature_2: feature_2_probability, ...}
         '''
         # Check bdd_file
@@ -163,7 +197,11 @@ class BDD:
 
         # Run binary feature_probabilities
         print("Getting the feature probabilities (this may take a while)...")
-        feature_probabilities_process = run("feature_probabilities.sh", bdd_file)
+        if feature_assignment == []:
+            feature_probabilities_process = run("feature_probabilities.sh", bdd_file)
+        else:
+            expanded_assignment = expand_assignment(bdd_file, feature_assignment)
+            feature_probabilities_process = run("feature_probabilities.sh", *expanded_assignment, bdd_file)
         result = feature_probabilities_process.stdout.decode(locale.getdefaultlocale()[1])
         line_iterator = iter(result.splitlines())
         probabilities = {}
@@ -213,32 +251,13 @@ class BDD:
         # Check bdd_file
         bdd_file = check_file_existence(self.dddmp_file, "dddmp")
 
-        # Get all feature names
-        f = open(bdd_file, "r")
-        bdd_code = f.read()
-        varnames = re.search('varnames\\s+(.*)', bdd_code).group(1).split()
-        f.close()
-
-        expanded_assignment = []
-        for feature in feature_assignment:
-            ft = None
-            if re.match('not\\s+', feature):
-                ft = re.search('not\\s+(.*)', feature).group(1)
-                if varnames.count(ft) == 0:
-                    raise Exception(ft + " is not a valid feature of " + bdd_file)
-                else:
-                    ft += "=false"
-            else:
-                if varnames.count(feature) == 0:
-                    raise Exception(feature + " is not a valid feature of " + bdd_file)
-                else:
-                    ft = feature + "=true"
-            expanded_assignment.append(ft)
-
         # Run counter
         print("Counting the number of valid configurations (this may take a while)...")
-        #count_process = run("counter", *expanded_assignment, bdd_file)
-        count_process = run("counter.sh", *expanded_assignment, bdd_file)
+        if feature_assignment == []:
+            count_process = run("counter.sh", bdd_file)
+        else:
+            expanded_assignment = expand_assignment(bdd_file, feature_assignment)
+            count_process = run("counter.sh", *expanded_assignment, bdd_file)
         result = count_process.stdout.decode(locale.getdefaultlocale()[1])
         return int(result)
 
