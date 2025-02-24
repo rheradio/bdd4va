@@ -148,6 +148,17 @@ Getting the product distribution (this may take a while)...
 
 For more examples, see the [bdd4va test](https://github.com/rheradio/bdd4va/blob/main/test/test_bdd4va.py).
 
+## Docker Instructions
+
+bdd4va ships with several precompiled binaries, which require a 64-bit Linux system and certain shared libraries.
+On systems that don't fulfill these requirements (such as macOS), running inside a virtualized [Docker](https://docs.docker.com/get-docker/) environment with the `--platform` flag is a viable alternative.
+Here is an example to get started (executing the code in `example.py`):
+
+```
+docker build . --platform linux/amd64 -t bdd4va
+docker run --rm --platform linux/amd64 -v "$PWD":/mount bdd4va
+```
+
 ## Detailed Function Documentation
 
 ### __init__(self, model_file, synthesize_bdd=True)
